@@ -114,7 +114,8 @@ export default getLanguage;*/
 var ajax = new XMLHttpRequest();
 
 // Seta tipo de requisição e URL com os parâmetros
-ajax.open("GET", "https://jsonplaceholder.typicode.com/todos/", true);
+//ajax.open("GET", "https://jsonplaceholder.typicode.com/todos/", true);
+ajax.open("GET", "https://api.github.com/users/takenet/repos", true);
 
 // Envia a requisição
 ajax.send();
@@ -132,7 +133,7 @@ ajax.onreadystatechange = function() {
         let i = 0;
         while (objeto.length > i) {
             for (let [key, value] of Object.entries(objeto[i])) {
-                if (key == "completed" && value == true) {
+                if (key == "language" && value == "C#") {
                     console.log(objeto[i]);
                 }
 
