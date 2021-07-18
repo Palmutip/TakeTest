@@ -1,144 +1,41 @@
-/*(function() {
-    const search = document.getElementById("search");
-    const profile = document.getElementById("profile");
-    //const url = "https://api.github.com/users/takenet/repos";
-    const url = "https://api.github.com/users";
-    const client_id = "Iv1.04a2120de9f17e8b";
-    const client_secret = "7b517fc71c1d8078d8b6b2ab060a98885770061d";
+const express = require('express');
+const app = express();
+const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest
+const Req = new XMLHttpRequest();
 
-    async function getLanguage(user) {
-        const response = await fetch(`${url}/${user}/repos?client_id=${client_id}&client_secret=${client_secret}`);
-        //const response = await fetch(`${url}/${user}?client_id=${client_id}&client_secret=${client_secret}`);
-        //const response = await fetch(`${url}`);
-        //const responseJson = await response.json();
-        //const teste = responseJson.language;
+const PORT = process.env.PORT || 8877;
 
-        const resultado = response.json();
+app.get('/repo1', (req, res) => {
+    res.json(JSON.parse(repositorio("https://api.github.com/repos/takenet/markdocs", Req))) 
+})
 
-        console.log(resultado);
+app.get('/repo2', (req, res) => {
+    res.json(JSON.parse(repositorio("https://api.github.com/repos/takenet/rabbitmq-dotnet-client", Req))) 
+})
 
-        //if (resultado.name == "async-samples") {
-        return resultado;
-        //}
+app.get('/repo3', (req, res) => {
+    res.json(JSON.parse(repositorio("https://api.github.com/repos/takenet/MarkdownSharp-GithubCodeBlocks", Req))) 
+})
 
+app.get('/repo4', (req, res) => {
+    res.json(JSON.parse(repositorio("https://api.github.com/repos/takenet/FreshMvvm", Req))) 
+})
 
-    }
+app.get('/repo5', (req, res) => {
+    res.json(JSON.parse(repositorio("https://api.github.com/repos/takenet/SignalR", Req))) 
+})
 
-    //function showProfile(user);
+app.listen(PORT, () => {
+    console.log('Escutando na porta: ' + PORT);
+})
 
-    search.addEventListener("keyup", e => {
-        const user = e.target.value;
+function repositorio(url, requisicao){
+   
+    // Seta tipo de requisição e URL com os parâmetros
+    requisicao.open("GET", url, false);
 
-        var res = getLanguage(user).then(res => console.log(res));
-        //console.log(Promise.resolve(res));
-    });
-})();*/
+    // Envia a requisição
+    requisicao.send(null);
 
-
-/*const search = document.getElementById("search");
-const profile = document.getElementById("profile");
-const url = "https://api.github.com/users/takenet/repos";
-//const url = "https://api.github.com/users";
-const client_id = "Iv1.04a2120de9f17e8b";
-const client_secret = "7b517fc71c1d8078d8b6b2ab060a98885770061d";
-
-function getLanguage() {
-    //const response = await fetch(`${url}/${user}?client_id=${client_id}&client_secret=${client_secret}`);
-    /*const response = await fetch(`${url}`);
-    const responseJson = await response.json();
-    const teste = responseJson.language;
-    const resultado = response.json();
-
-    //responseJson
-    //return resultado;
-    console.log("deu");
-}
-
-export default getLanguage;*/
-
-/*const search = document.getElementById("search");
-const profile = document.getElementById("profile");
-const url = "https://jsonplaceholder.typicode.com/todos/";
-
-function getLanguage() {
-    //const response = await fetch(`${url}/${user}?client_id=${client_id}&client_secret=${client_secret}`);
-    const response = await fetch(`${url}`);
-    const responseJson = await response.json();
-    const teste = responseJson.language;
-    const resultado = response.json();
-
-    //responseJson
-    //return resultado;
-    console.log("deu");
-}
-
-export default getLanguage;*/
-
-/*
-(function() {
-    const search = document.getElementById("search");
-    const profile = document.getElementById("profile");
-    const url = "https://jsonplaceholder.typicode.com/todos/";
-    const client_id = "Iv1.04a2120de9f17e8b";
-    const client_secret = "7b517fc71c1d8078d8b6b2ab060a98885770061d";
-
-    async function getLanguage(user) {
-        //const response = await fetch(`${url}/${user}/repos?client_id=${client_id}&client_secret=${client_secret}`);
-        //const response = await fetch(`${url}/${user}?client_id=${client_id}&client_secret=${client_secret}`);
-        const response = await fetch(`${url}`);
-        //const responseJson = await response.json();
-        //const teste = responseJson.language;
-
-        const resultado = response.json();
-
-        console.log(resultado);
-
-        //if (resultado.name == "async-samples") {
-        return resultado;
-        //}
-
-
-    }
-
-    //function showProfile(user);
-
-    search.addEventListener("keyup", e => {
-        const user = e.target.value;
-
-        var res = getLanguage(user).then(res => console.log(res));
-        //console.log(Promise.resolve(res));
-    });
-})();*/
-
-// Exemplo de requisição GET
-var ajax = new XMLHttpRequest();
-
-// Seta tipo de requisição e URL com os parâmetros
-//ajax.open("GET", "https://jsonplaceholder.typicode.com/todos/", true);
-ajax.open("GET", "https://api.github.com/users/takenet/repos", true);
-
-// Envia a requisição
-ajax.send();
-
-// Cria um evento para receber o retorno.
-ajax.onreadystatechange = function() {
-    // Caso o state seja 4 e o http.status for 200, é porque a requisiçõe deu certo.
-    if (ajax.readyState == 4 && ajax.status == 200) {
-        var data = ajax.responseText;
-        var objeto = JSON.parse(data);
-
-        // Retorno do Ajax
-        //console.log(objeto);
-
-        let i = 0;
-        while (objeto.length > i) {
-            for (let [key, value] of Object.entries(objeto[i])) {
-                if (key == "language" && value == "C#") {
-                    console.log(objeto[i]);
-                }
-
-            }
-            i++;
-        }
-    }
+    return requisicao.responseText;
 }
