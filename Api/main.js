@@ -5,6 +5,10 @@ const Req = new XMLHttpRequest();
 
 const PORT = process.env.PORT || 8877;
 
+app.get('/', (req, res) => {
+    res.json({ msg : "OK"}) 
+})
+
 app.get('/repo1', (req, res) => {
     res.json(JSON.parse(repositorio("https://api.github.com/repos/takenet/markdocs", Req))) 
 })
